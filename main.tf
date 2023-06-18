@@ -53,3 +53,21 @@ resource "aws_dynamodb_table" "tf-table" {
     type = "S"
   }
 }
+
+locals {
+  environment_name = terraform.workspace
+  project_name = "Terraform Tutorial"
+  owner        = "rezza danial"
+}
+
+resource "aws_instance" "instance" {
+  ami           = var.ami
+  instance_type = var.instance_type
+
+  tags = {
+    Name      = var.instance_name
+    Owner     = local.owner
+    Project   = local.project_name
+    Environment = local.environment_name
+  }
+}
